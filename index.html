@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Copyright 2017 Esri
+
+        Licensed under the Apache License, Version 2.0 (the 'License');
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at:
+        https://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an 'AS IS' BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    -->
+    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-10866840-38"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-10866840-38');
+    </script>-->
+    <title>Cross Country Mobility</title>
+    <meta http-equiv='content-type' content='text/html;charset=utf-8' />
+    <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta name='author' content='Esri' />
+    <meta name='keywords' content='' />
+    <meta name='description' content='' />
+    <meta name='robots' content='index,follow' />
+    <link type='image/ico' rel='shortcut icon' href='img/favicon.ico' />
+    <link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+    <link type='text/css' rel='stylesheet' href='//js.arcgis.com/4.5/esri/css/main.css' />
+    <link type='text/css' rel='stylesheet' href='index.css' />
+    <script type='text/javascript' src='js/jquery-3.2.1.min.js'></script>
+    <script type='text/javascript' src='js/popper.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='//js.arcgis.com/4.5/'></script>
+    <script type='text/javascript' src='index.js'></script>
+</head>
+<body>
+    <div id='left-panel'>
+        <div id='banner'>
+            <div id='banner-text'>Cross Country Mobility</div>
+        </div>
+        <div id='pages'>
+            <div class='rc-page' data-value='1'>
+                <div class='rc-page-content'>
+                    <p>Welcome to the <a target='_blank' href='https://developers.arcgis.com/javascript/'>cross country mobility</a> application designed and developed by <a target='_blank' href='https://www.esri.com/'>Esri</a>'s <a target='_blank' href='https://geonet.esri.com/groups/applications-prototype-lab'>applications prototype lab</a>. The purpose of this application is to route the optimal path from one or more origins to a single destination in the United States for three modes of transport.</p>
+                    <p>Please click <b>Next</b> below to select your route's start and end locations.</p>
+                </div>
+                <div class='rc-page-footer'>
+                    <button id="button-page-1-next" type='button' class='btn btn-primary rounded-0 float-right rc-button-width'>Next</button>
+                </div>
+            </div>
+            <div class='rc-page collapse' data-value='2'>
+                <div class='rc-page-content'>
+                    <p>Position the origin of the cross country voyage. To add more than one origin click the <b>add origin</b> button in the lower left hand corner of the map.</p>
+                    <p>Click <b>Next</b> to progress to begin processing or <b>Previous</b> to modify the destination.</p>
+                </div>
+                <div class='rc-page-footer'>
+                    <button id="button-page-2-back" type='button' class='btn btn-primary rounded-0 float-left rc-button-width'>Back</button>
+                    <button id="button-page-2-process" type='button' class='btn btn-primary rounded-0 float-right rc-button-width'>Process</button>
+                </div>
+            </div>
+            <div class='rc-page collapse' data-value='3'>
+                <div class='rc-page-content'>
+                    <p>The results of your analysis will be available momentarily.</p>
+                    <div class='progress rounded-0'>
+                        <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div>
+                    </div>
+                    <button id="button-page-3-cancel" type='button' class='btn btn-primary rounded-0 rc-button-width'>Cancel</button>
+                </div>
+                <div class='rc-page-footer'>
+                    <button id="button-page-3-back" type='button' class='btn btn-primary rounded-0 float-left rc-button-width'>Back</button>
+                    <button id="button-page-3-startover" type='button' class='btn btn-primary rounded-0 float-right rc-button-width'>Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='right-panel'>
+        <div id='map'></div>
+        <a id='logo' target='_blank' href='https://www.esri.com'><img src='img/esri-white.png' height='53' /></a>
+    </div>
+</body>
+</html>
