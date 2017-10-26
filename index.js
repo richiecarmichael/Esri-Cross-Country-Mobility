@@ -15,21 +15,10 @@
 require(
     [
         'esri/Map',
-        'esri/Camera',
         'esri/Graphic',
-        'esri/geometry/Point',
         'esri/geometry/SpatialReference',
-        'esri/geometry/Extent',
         'esri/layers/FeatureLayer',
-        'esri/layers/ImageryLayer',
-        'esri/layers/support/MosaicRule',
-        'esri/layers/support/RasterFunction',
-        'esri/symbols/SimpleFillSymbol',
-        'esri/renderers/SimpleRenderer',
         'esri/views/SceneView',
-        'esri/views/3d/externalRenderers',
-        'esri/tasks/QueryTask',
-        'esri/tasks/support/Query',
         'esri/tasks/Geoprocessor',
         'esri/tasks/support/FeatureSet',
         'esri/widgets/Home',
@@ -41,27 +30,15 @@ require(
     ],
     function (
         Map,
-        Camera,
         Graphic,
-        Point,
         SpatialReference,
-        Extent,
         FeatureLayer,
-        ImageryLayer,
-        MosaicRule,
-        RasterFunction,
-        SimpleFillSymbol,
-        SimpleRenderer,
         SceneView,
-        ExternalRenderers,
-        QueryTask,
-        Query,
         Geoprocessor,
         FeatureSet,
         Home,
         Search,
         string,
-        request,
         number
     ) {
         $(document).ready(function () {
@@ -69,7 +46,8 @@ require(
             'use strict';
 
             //
-            var LEASTCOST = 'https://maps.esri.com/apl3/rest/services/CCM/MosaicLCP/GPServer/MosaicLCP';
+            //var LEASTCOST = 'https://maps.esri.com/apl3/rest/services/CCM/MosaicLCP/GPServer/MosaicLCP';
+            var LEASTCOST = 'https://maps.esri.com/apl22/rest/services/CCM/MosaicLCP2dj/GPServer/MosaicLCP';
             var DESTINATIONS = [{
                     name: 'St. Peters',
                     description: 'St. Peters is a city in St. Charles County, Missouri, United States. The 2010 census showed the city\'s population to be 52,575 tied for 10th with Blue Springs, Missouri.',
@@ -135,7 +113,7 @@ require(
                 }
             ];
 
-            var destinationGraphics = DESTINATIONS.map(function (v) {
+            var destinations = DESTINATIONS.map(function (v) {
                 return new Graphic({
                     geometry: ({
                         type: 'point',
@@ -178,7 +156,7 @@ require(
                 spatialReference: {
                     wkid: 4326
                 },
-                source: destinationGraphics,
+                source: destinations,
                 renderer: {
                     type: 'simple',
                     symbol: {
@@ -187,7 +165,8 @@ require(
                         width: '40px',
                         height: '80px'
                     }
-                }
+                },
+                visible: false
             });
 
             var map = new Map({
@@ -198,20 +177,35 @@ require(
                 ]
             });
 
+            var NORTHAMERICA = {
+                position: {
+                    x: -11141653,
+                    y: 1178945,
+                    z: 6491147,
+                    spatialReference: {
+                        wkid: 102100
+                    }
+                },
+                heading: 0,
+                tilt: 23
+            };
+
+            var MISSOURI = {
+                position: {
+                    x: -10106375,
+                    y: 4631120,
+                    z: 35847,
+                    spatialReference: {
+                        wkid: 102100
+                    }
+                },
+                heading: 0,
+                tilt: 52
+            };
+
             //
             var view = new SceneView({
-                camera: {
-                    position: {
-                        x: -11141653,
-                        y: 1178945,
-                        z: 6491147,
-                        spatialReference: {
-                            wkid: 102100
-                        }
-                    },
-                    heading: 0,
-                    tilt: 23
-                },
+                camera: MISSOURI,
                 popup: {
                     dockEnabled: true,
                     dockOptions: {
@@ -312,6 +306,15 @@ require(
             });
 
             function openPage(page) {
+                switch (page) {
+                    case 0:
+                        destination.visible = false;
+                        break;
+                    case 1:
+                        destination.visible = true;
+                        break
+                }
+                //console.log(view.camera.toJSON());
                 $('.rc-page[data-value=' + page + ']').removeClass('collapse');
                 $('.rc-page[data-value!=' + page + ']').addClass('collapse');
             }
@@ -327,8 +330,8 @@ require(
                 });
 
                 var parameters = {
-                    City: 'NewMelle',   // 'NewMelle', 'StPeters'
-                    Vehicle: 'M151',    // 'M1', 'M151', 'T62' 
+                    City: '\'NewMelle\'',   // 'NewMelle', 'StPeters'
+                    Vehicle: '\'M151\'',    // 'M1', 'M151', 'T62' 
                     Origins: new FeatureSet({
                         geometryType: 'point',
                         fields: [
@@ -346,28 +349,24 @@ require(
                             new Graphic({
                                 geometry: ({
                                     type: 'point', 
-                                    x: -89.80,
-                                    y: 38.49,
+                                    x: -90.700026,
+                                    y: 38.810708,
                                     spatialReference: {
                                         wkid: 4326
                                     }
                                 }),
                                 attributes: {
-                                    StartLocation: 'Mascoutah'
+                                    StartLocation: 'O\'Fallon'
                                 }
                             })
                         ]
-                        //,
-                        //spatialReference: {
-                        //    wkid: 102100
-                        //}
                     })
                 };
 
                 //
                 gp.submitJob(parameters).then(function (result) {
                     var resultFeatures = result.results[0].value.features;
-
+                    var x = '';
                     //// Assign each resulting graphic a symbol
                     //var viewshedGraphics = resultFeatures.map(function (feature) {
                     //    feature.symbol = fillSymbol;
