@@ -365,7 +365,12 @@ require(
 
                 //
                 gp.submitJob(parameters).then(function (result) {
-                    var resultFeatures = result.results[0].value.features;
+                    var messages = result.messages;
+                    var results = result.results;
+                    messages.forEach(function (e) {
+                        console.log(e.type + " " + e.description);
+                    });
+                    //var resultFeatures = result.results[0].value.features;
                     var x = '';
                     //// Assign each resulting graphic a symbol
                     //var viewshedGraphics = resultFeatures.map(function (feature) {
