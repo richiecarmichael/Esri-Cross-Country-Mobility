@@ -75,6 +75,7 @@ require(
             };
 
             var LEASTCOST = 'https://maps.esri.com/apl22/rest/services/CCM/MosaicLCP2dj/GPServer/MosaicLCP';
+            //var LEASTCOST = 'https://maps.esri.com/apl3/rest/services/sdccm/SDCCM/GPServer/SD_CCM';
             var LOCATIONS = [{
                     name: 'St. Peters',
                     description: 'St. Peters is a city in St. Charles County, Missouri, United States. The 2010 census showed the city\'s population to be 52,575 tied for 10th with Blue Springs, Missouri.',
@@ -143,7 +144,6 @@ require(
             var page = 1;
             
             var isProcessing = false;
-            //var jobid = null;
             var locations = new FeatureLayer({
                 fields: [
                     {
@@ -511,8 +511,6 @@ require(
                         break;
                     case 4:
                         // Page 4 - Results
-
-
                         break;
                 }
             }
@@ -561,7 +559,6 @@ require(
                 ]);
 
                 ['\'M1\'', '\'M151\'', '\'T62\''].forEach(function (tank) {
-
                     var parameters = {
                         City: '\'NewMelle\'',   // 'NewMelle', 'StPeters'
                         //Vehicle: '\'T62\'',    // 'M1', 'M151', 'T62' 
@@ -593,11 +590,6 @@ require(
 
                     gp.submitJob(parameters).then(function (result) {
                         gp.getResultData(result.jobId, 'LeastCostPaths').then(function (e) {
-                            // Exit if processing already cancelled by user.
-                            //if (!isProcessing) {
-                            //    return;
-                            //}
-
                             // Add route to map.
                             route.addMany(e.value.features.map(function (g) {
                                 return new Graphic({
@@ -611,7 +603,6 @@ require(
                             }));
 
                             // Update UI
-                            //isProcessing = false;
                             page++;
                             updatePage();
                             updateUI();
